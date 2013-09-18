@@ -8,7 +8,7 @@ class Utterance
   end
 
   def to_s
-    "#{word} (#{meaning})"
+    "'#{word}' (#{meaning})"
   end
 end
 
@@ -34,13 +34,13 @@ class Item
         word = utter_randomly
       end
     end
-    puts "Item ##{id} saying #{word} (#{meaning})"
+    puts "Item ##{id} speaking '#{word}'"
     Utterance.new(meaning, word) unless word.nil?
   end
 
   def learn utterance
     unless knows? utterance.meaning
-      puts "Item ##{id} learning ##{utterance}"
+      puts "Item ##{id} learning #{utterance}"
       grammar.learn utterance.meaning, utterance.word
     end
   end

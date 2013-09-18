@@ -12,7 +12,6 @@ class Game
       puts
     end
 
-    puts
     puts "Population:"
     puts population
   end
