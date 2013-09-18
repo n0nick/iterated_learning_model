@@ -37,6 +37,8 @@ class Game
       end
       item.age+= 1
     end
+
+    puts "Avg. grammar size: #{average_grammar_size}"
   end
 
   def spawn_item
@@ -44,8 +46,13 @@ class Game
   end
 
   def kill_random_item
-    index = rand(population.length)
+    index = rand(population.size)
     population.delete_at index
+  end
+
+  def average_grammar_size
+    sizes = population.map {|item| item.grammar.size}
+    sizes.inject(:+).to_f / population.size
   end
 end
 
