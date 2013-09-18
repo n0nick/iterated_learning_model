@@ -39,7 +39,14 @@ class Item
   end
 
   def learn utterance
-    grammar.learn utterance.meaning, utterance.word
+    unless knows? utterance.meaning
+      puts "player ##{id} learning ##{utterance}"
+      grammar.learn utterance.meaning, utterance.word
+    end
+  end
+
+  def knows? meaning
+    !grammar.lookup(meaning).nil?
   end
 
   def should_invent?
