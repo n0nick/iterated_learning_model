@@ -11,6 +11,7 @@ options = {
   population: 10,
   iterations: 500,
   probability: 10,
+  print_grammars: false,
 }
 OptionParser.new do |opts|
   opts.banner = "Usage: learner.rb [options]"
@@ -36,7 +37,16 @@ OptionParser.new do |opts|
       MyLogger.level = Logger::DEBUG
     end
   end
+
+  opts.on("--print-grammars",
+         "Print final grammars") do |print_grammars|
+    options[:print_grammars] = true
+  end
 end.parse!
 
 game = Game.new(options)
 game.play(options[:iterations])
+
+if options[:print_grammars]
+  puts game.grammars
+end

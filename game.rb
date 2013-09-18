@@ -18,6 +18,12 @@ class Game
     MyLogger.debug "Population: #{population}"
   end
 
+  def grammars
+    population.map do |item|
+      item.grammar
+    end
+  end
+
   private
 
   def init_population(size)
@@ -53,7 +59,7 @@ class Game
   end
 
   def average_grammar_size
-    sizes = population.map {|item| item.grammar.size}
+    sizes = grammars.map { |g| g.size }
     sizes.inject(:+).to_f / population.size
   end
 end
