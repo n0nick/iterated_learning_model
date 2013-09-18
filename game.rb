@@ -1,15 +1,12 @@
 class Game
   attr_accessor :population
 
-  PopulationSize = 10
-  Iterations = 500
-
-  def initialize
-    init_population
+  def initialize(population_size)
+    init_population(population_size)
   end
 
-  def play
-    Iterations.times do |i|
+  def play(iterations)
+    iterations.times do |i|
       puts "Playing turn ##{i}"
       play_turn
       puts
@@ -22,9 +19,9 @@ class Game
 
   private
 
-  def init_population
+  def init_population(size)
     self.population = []
-    PopulationSize.times do
+    size.times do
       spawn_item
     end
   end
