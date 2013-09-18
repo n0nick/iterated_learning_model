@@ -9,6 +9,19 @@ class Meaning
     self.patient   = patient
   end
 
+  def get_part(part)
+    case part
+    when :agent
+      agent
+    when :predicate
+      predicate
+    when :patient
+      patient
+    else
+      nil
+    end
+  end
+
   def to_s
     "#{agent}_#{predicate}_#{patient}"
   end

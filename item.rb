@@ -31,14 +31,35 @@ class Item
 
   def speak
     meaning = Meanings.sample
-    word = grammar.lookup(meaning)
-    if word.nil?
+    word = lookup(meaning)
+    if word.empty?
       if should_invent?
         word = utter_randomly
       end
     end
     MyLogger.debug "Item ##{id} speaking '#{word}' (#{meaning})"
     Utterance.new(meaning, word) unless word.nil?
+  end
+
+  def lookup(meaning)
+    known = []
+    unknown = []
+    parts = [:agent, :predicate, :patient]
+    parts.each do |part|
+      word = grammar.lookup(meaning.get_part(part))
+      if word
+        known << parts.delete(part)
+      else
+        unknown << meaning.get_part(part)
+      end
+    end
+
+    rest = grammar.lookup(unknown.join('_'))
+    if rest
+      known << rest
+    end
+
+    known.join('')
   end
 
   def learn utterance
