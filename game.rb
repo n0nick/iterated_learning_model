@@ -40,7 +40,7 @@ class Game
       utterance = item.speak
       unless utterance.nil?
         population.each do |other|
-          other.learn utterance
+          other.induce utterance
         end
       end
       item.age+= 1

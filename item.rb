@@ -61,11 +61,14 @@ class Item
     known.join('')
   end
 
-  def learn utterance
-    unless knows? utterance.meaning
-      MyLogger.debug "Item ##{id} learning #{utterance}"
-      grammar.learn utterance.meaning, utterance.word
-    end
+  def induce utterance
+    #1. Incorporation
+    MyLogger.debug "Item ##{id} learning #{utterance}"
+    grammar.learn utterance.meaning, utterance.word
+    #2. Merging
+    #utterance.meaning.each do |part, value|
+    #  rule = grammar.lookup_partial(part)
+    #end
   end
 
   def knows? meaning
