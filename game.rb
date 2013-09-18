@@ -45,7 +45,8 @@ class Game
   end
 
   def kill_random_item
-    population.delete_at rand(population.length)
+    index = rand(population.length)
+    population.delete_at index
   end
 end
 

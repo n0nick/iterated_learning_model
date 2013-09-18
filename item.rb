@@ -6,6 +6,10 @@ class Utterance
     self.meaning = meaning
     self.word = word
   end
+
+  def to_s
+    "#{word} (#{meaning})"
+  end
 end
 
 class Item
