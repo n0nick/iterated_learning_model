@@ -34,13 +34,13 @@ class Item
         word = utter_randomly
       end
     end
-    puts "player #{id} saying #{word} (#{meaning})"
+    puts "Item ##{id} saying #{word} (#{meaning})"
     Utterance.new(meaning, word) unless word.nil?
   end
 
   def learn utterance
     unless knows? utterance.meaning
-      puts "player ##{id} learning ##{utterance}"
+      puts "Item ##{id} learning ##{utterance}"
       grammar.learn utterance.meaning, utterance.word
     end
   end
