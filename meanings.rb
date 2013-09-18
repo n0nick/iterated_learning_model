@@ -31,25 +31,28 @@ class MeaningPatient < MeaningBase
 end
 
 class Meaning < MeaningBase
-  attr_accessor :agent, :predicate, :patient
+  include Enumerable
 
   def initialize(agent, predicate, patient)
-    self.agent     = MeaningAgent.new(agent)
-    self.predicate = MeaningPredicate.new(predicate)
-    self.patient   = MeaningPatient.new(patient)
+    self.value = {
+      agent:     MeaningAgent.new(agent),
+      patient:   MeaningPatient.new(patient),
+      predicate: MeaningPredicate.new(predicate),
+    }
   end
 
-  def get_part(part)
-    case part
-    when :agent
-      agent
-    when :predicate
-      predicate
-    when :patient
-      patient
-    else
-      nil
-    end
+  def agent
+    value[:agent]
+  end
+  def patient
+    value[:patient]
+  end
+  def predicate
+    value[:predicate]
+  end
+
+  def each(&block)
+    value.each(&block)
   end
 
   def to_s

@@ -44,13 +44,12 @@ class Item
   def lookup(meaning)
     known = []
     unknown = []
-    parts = [:agent, :predicate, :patient]
-    parts.each do |part|
-      word = grammar.lookup(meaning.get_part(part))
+    meaning.each do |part, value|
+      word = grammar.lookup(value)
       if word
-        known << parts.delete(part)
+        known << word
       else
-        unknown << meaning.get_part(part)
+        unknown << value
       end
     end
 
