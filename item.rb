@@ -36,7 +36,7 @@ class Item
         word = utter_randomly
       end
     end
-    MyLogger.debug "Item ##{id} speaking '#{word}'"
+    MyLogger.debug "Item ##{id} speaking '#{word}' (#{meaning})"
     Utterance.new(meaning, word) unless word.nil?
   end
 
