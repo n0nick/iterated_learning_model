@@ -78,7 +78,7 @@ class Item
   end
 
   def utter_randomly
-    length = 3 + rand(5)
+    length = 3 + rand(5) #TODO magic
     (0...length).map{ Alphabet.sample }.join
   end
 
