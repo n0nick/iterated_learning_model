@@ -59,7 +59,7 @@ class Item
   end
 
   def to_s
-    "<Item ##{id} age:#{age} grammar:#{grammar}>"
+    "<Item ##{id} age:#{age} grammar.size:#{grammar.size}>"
   end
 
   def self.generate_id
