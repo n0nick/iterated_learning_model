@@ -1,12 +1,42 @@
 # encoding: UTF-8
 
-class Meaning
+class MeaningBase
+  attr_accessor :value
+
+  def initialize(value)
+    self.value = value
+  end
+
+  def to_sym
+    self.to_s.to_sym
+  end
+end
+
+class MeaningAgent < MeaningBase
+  def to_s
+    "Agent=#{value}"
+  end
+end
+
+class MeaningPredicate < MeaningBase
+  def to_s
+    "Predicate=#{value}"
+  end
+end
+
+class MeaningPatient < MeaningBase
+  def to_s
+    "Patient=#{value}"
+  end
+end
+
+class Meaning < MeaningBase
   attr_accessor :agent, :predicate, :patient
 
   def initialize(agent, predicate, patient)
-    self.agent     = agent
-    self.predicate = predicate
-    self.patient   = patient
+    self.agent     = MeaningAgent.new(agent)
+    self.predicate = MeaningPredicate.new(predicate)
+    self.patient   = MeaningPatient.new(patient)
   end
 
   def get_part(part)
@@ -23,11 +53,7 @@ class Meaning
   end
 
   def to_s
-    "#{agent}_#{predicate}_#{patient}"
-  end
-
-  def to_sym
-    self.to_s.to_sym
+    "S/#{agent},#{patient},#{predicate}"
   end
 end
 
