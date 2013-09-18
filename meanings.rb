@@ -1,5 +1,23 @@
 # encoding: UTF-8
 
+class Meaning
+  attr_accessor :agent, :predicate, :patient
+
+  def initialize(agent, predicate, patient)
+    self.agent     = agent
+    self.predicate = predicate
+    self.patient   = patient
+  end
+
+  def to_s
+    "#{agent}_#{predicate}_#{patient}"
+  end
+
+  def to_sym
+    self.to_s.to_sym
+  end
+end
+
 MeaningObjects = [
   :Mike, :John, :Mary, :'Tu ̈nde', :Zoltan
 ]
@@ -13,8 +31,7 @@ Meanings = []
 MeaningObjects.each do |agent|
   MeaningActions.each do |predicate|
     (MeaningObjects - [agent]).each do |patient|
-      sentence = "#{agent}_#{predicate}_#{patient}"
-      Meanings << sentence.to_sym
+      Meanings << Meaning.new(agent, predicate, patient)
     end
   end
 end

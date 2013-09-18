@@ -1,10 +1,10 @@
 class Grammar < Hash
-  def learn(left_hand, right_hand)
-    self[left_hand] = right_hand
+  def learn(meaning, word)
+    self[meaning.to_sym] = word
   end
 
-  def lookup(left_hand)
-    self[left_hand]
+  def lookup(meaning)
+    self[meaning.to_sym]
   end
 end
 
