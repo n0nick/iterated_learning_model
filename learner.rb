@@ -9,7 +9,8 @@ require_relative 'meanings'
 require 'optparse'
 options = {
   population: 10,
-  iterations: 500
+  iterations: 500,
+  probability: 10,
 }
 OptionParser.new do |opts|
   opts.banner = "Usage: learner.rb [options]"
@@ -24,6 +25,11 @@ OptionParser.new do |opts|
     options[:iterations] = v
   end
 
+  opts.on("--probability N", Float,
+         "Set invention probability") do |p|
+    options[:probability] = p
+  end
+
   opts.on("-d", "--debug",
            "Show debug messages") do |debug|
     if debug
@@ -32,5 +38,5 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-game = Game.new(options[:population])
+game = Game.new(options)
 game.play(options[:iterations])

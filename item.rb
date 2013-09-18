@@ -19,13 +19,14 @@ class Item
   attr_accessor :age
   attr_accessor :grammar
 
-  InventProbability = 10 # /100
   Alphabet = [ 'a', 'b', 'c', 'd' ]
 
-  def initialize
+  def initialize(probability)
     self.id = Item.generate_id
     self.age = 0
     self.grammar = Grammar.new
+
+    @probability = probability
   end
 
   def speak
@@ -52,7 +53,7 @@ class Item
   end
 
   def should_invent?
-    rand(100) < InventProbability
+    rand(100) < @probability * 100
   end
 
   def utter_randomly

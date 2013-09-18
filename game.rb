@@ -3,8 +3,10 @@ require_relative 'logger'
 class Game
   attr_accessor :population
 
-  def initialize(population_size)
-    init_population(population_size)
+  def initialize(options)
+    @options = options
+
+    init_population(@options[:population])
   end
 
   def play(iterations)
@@ -42,7 +44,7 @@ class Game
   end
 
   def spawn_item
-    population << Item.new
+    population << Item.new(@options[:probability])
   end
 
   def kill_random_item
