@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require_relative 'logger'
 require_relative 'game'
 require_relative 'item'
 require_relative 'grammar'
@@ -21,6 +22,13 @@ OptionParser.new do |opts|
   opts.on("-i N", "--iterations N", Integer,
           "Set iterations count") do |v|
     options[:iterations] = v
+  end
+
+  opts.on("-d", "--debug",
+           "Show debug messages") do |debug|
+    if debug
+      MyLogger.level = Logger::DEBUG
+    end
   end
 end.parse!
 

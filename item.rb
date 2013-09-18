@@ -1,3 +1,5 @@
+require_relative 'logger'
+
 class Utterance
   attr_accessor :meaning
   attr_accessor :word
@@ -34,13 +36,13 @@ class Item
         word = utter_randomly
       end
     end
-    puts "Item ##{id} speaking '#{word}'"
+    MyLogger.debug "Item ##{id} speaking '#{word}'"
     Utterance.new(meaning, word) unless word.nil?
   end
 
   def learn utterance
     unless knows? utterance.meaning
-      puts "Item ##{id} learning #{utterance}"
+      MyLogger.debug "Item ##{id} learning #{utterance}"
       grammar.learn utterance.meaning, utterance.word
     end
   end

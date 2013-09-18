@@ -1,3 +1,5 @@
+require_relative 'logger'
+
 class Game
   attr_accessor :population
 
@@ -7,13 +9,11 @@ class Game
 
   def play(iterations)
     iterations.times do |i|
-      puts "Playing turn ##{i}"
+      MyLogger.debug "Playing turn ##{i}"
       play_turn
-      puts
     end
 
-    puts "Population:"
-    puts population
+    MyLogger.debug "Population: #{population}"
   end
 
   private
@@ -38,7 +38,7 @@ class Game
       item.age+= 1
     end
 
-    puts "Avg. grammar size: #{average_grammar_size}"
+    MyLogger.info "Avg. grammar size: #{average_grammar_size}"
   end
 
   def spawn_item
