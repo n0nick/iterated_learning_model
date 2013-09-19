@@ -26,6 +26,7 @@ class Grammar
 
     def generalise_part(part, word)
       index = generate_index
+      self.meaning = meaning.clone
       meaning[part] = index
       self.word.sub! word, index.to_s
     end
