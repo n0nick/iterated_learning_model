@@ -51,7 +51,10 @@ class Meaning
   end
 
   def to_s
-    "S/Agent=#{agent},Patient=#{patient},Predicate=#{predicate}"
+    values.keys.inject([]) do |res, part|
+      res << "#{part}=#{values[part]}" if has?(part)
+      res
+    end.join(',')
   end
 
   def to_sym
