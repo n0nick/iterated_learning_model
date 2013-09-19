@@ -17,6 +17,10 @@ class Grammar < Hash
   def lookup(word)
     self[word.to_sym]
   end
+
+  def lookup_by_part(part, value)
+    @by_part[part][value] || []
+  end
 end
 
 

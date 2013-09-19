@@ -66,9 +66,13 @@ class Item
     MyLogger.debug "Item ##{id} learning #{utterance}"
     grammar.learn_meaning utterance.word, utterance.meaning
     #2. Merging
-    #utterance.meaning.each do |part, value|
-    #  rule = grammar.lookup_partial(part)
-    #end
+    utterance.meaning.each do |part, value|
+      words = grammar.lookup_by_part(part, value)
+      if words.size > 1 # we can probably merge
+        #TODO TODO TODO
+      end
+    end
+    MyLogger.debug "----"
   end
 
   def knows? meaning
