@@ -34,8 +34,8 @@ class Player
   end
 
   def self.generate_id
-    @last_id ||= 0
-    @last_id+= 1
+    @_last_id ||= 0
+    @_last_id+= 1
   end
 
   private
