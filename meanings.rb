@@ -45,7 +45,7 @@ class Meaning
 
   def missing_parts
     values.keys.inject({}) do |res, part|
-      res[part] = values[part] unless has?(part)
+      res[values[part]] = part unless has?(part)
       res
     end
   end
