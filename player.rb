@@ -38,5 +38,39 @@ class Player
   def should_invent?
     rand(100) < @probability * 100
   end
+
+  def lookup(meaning, should_invent)
+    items = grammar.lookup(meaning)
+    if items.empty?
+      if should_invent
+        utter_randomly
+      end
+    else
+      items.sort_by! do |item|
+        item.meaning.missing_parts.count
+      end
+      items.each do |item|
+        if item.full?
+          return item.word
+        else
+          current = item.clone
+          current.missing_parts.each do |index, part|
+            res = self.lookup(meaning[part], should_invent)
+            unless res.nil?
+              current.embed!(index, res)
+            end
+          end
+          if current.full?
+            return current.word
+          end
+        end
+      end
+    end
+  end
+
+  def utter_randomly
+    length = 3 + rand(5) #TODO magic
+    (0...length).map{ Alphabet.sample }.join
+  end
 end
 
