@@ -47,8 +47,9 @@ class Game
       item.age+= 1
     end
 
-    MyLogger.info "grammar: #{average_grammar_attribute(:count)}"
-    MyLogger.info "meanings: #{average_grammar_attribute(:meanings_count)}"
+    avg_grammar  = average_grammar_attribute(:count)
+    avg_meanings = average_grammar_attribute(:meanings_count)
+    MyLogger.info "grammar: #{avg_grammar} meanings: #{avg_meanings}"
   end
 
   def spawn_item
