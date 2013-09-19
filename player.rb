@@ -46,20 +46,20 @@ class Player
   end
 
   def lookup(meaning, should_invent)
-    items = grammar.lookup(meaning)
-    if items.empty?
+    rules = grammar.lookup(meaning)
+    if rules.empty?
       if should_invent
         utter_randomly
       end
     else
-      items.sort_by! do |item|
-        item.meaning.missing_parts.count
+      rules.sort_by! do |rule|
+        rule.meaning.missing_parts.count
       end
-      items.each do |item|
-        if item.full?
-          return item.word
+      rules.each do |rule|
+        if rule.full?
+          return rule.word
         else
-          current = item.clone
+          current = rule.clone
           current.missing_parts.each do |index, part|
             res = self.lookup(meaning[part], should_invent)
             unless res.nil?

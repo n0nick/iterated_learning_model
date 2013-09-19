@@ -1,5 +1,7 @@
+require_relative 'utils'
+
 class Grammar < Hash
-  class Item
+  class Rule
     attr_accessor :meaning, :word
 
     def initialize(meaning, word)
@@ -38,18 +40,18 @@ class Grammar < Hash
   end
 
   def learn(meaning, word)
-    self[meaning.to_sym] = Item.new(meaning, word)
+    self[meaning.to_sym] = Rule.new(meaning, word)
   end
 
   def meanings_count
-    self.select do |key, item|
-      item.full?
+    self.select do |key, rule|
+      rule.full?
     end.count
   end
 
   def lookup(target)
-    self.select do |key, item|
-      target.matches?(item.meaning)
+    self.select do |key, rule|
+      target.matches?(rule.meaning)
     end.values
   end
 end
