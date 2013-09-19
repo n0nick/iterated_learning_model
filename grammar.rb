@@ -47,6 +47,34 @@ class Grammar < Hash
     end
     self[rule.meaning.to_sym] = rule
   end
+
+  def merge(rule)
+    new_rules = []
+
+    rule.meaning.each do |part, meaning|
+      self.each do |key, rule2|
+        if rule2.meaning[part] == meaning
+          new_rules << merge_step(rule, rule2, part)
+        end
+      end
+    end
+
+    new_rules.each do |new_rule|
+      learn new_rule
+    end
+  end
+
+  def merge_step(rule1, rule2, part)
+    # create new rule from longest common substring
+    new_word = Utils.longest_common_substring(rule1.word, rule2.word)
+    new_meaning = Meaning.new
+    new_meaning[part] = rule1.meaning[part]
+
+    # update previous rules
+    rule1.generalise_part(part, new_word)
+    rule2.generalise_part(part, new_word)
+
+    Rule.new(new_meaning, new_word)
   end
 
   def meanings_count

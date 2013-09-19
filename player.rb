@@ -25,7 +25,10 @@ class Player
 
   def learn utterance
     MyLogger.debug "Player ##{id} learning #{utterance}"
-    grammar.learn utterance.meaning, utterance.word
+    # 1. Incorporation
+    rule = grammar.learn utterance.meaning, utterance.word
+    # 2. Merging
+    grammar.merge rule
   end
 
   def to_s
