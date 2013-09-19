@@ -12,6 +12,13 @@ characteristics of various linguistic features.
 This work is a part of my seminar paper for the course [0627-3777 Learning
 Seminar: Computation and Cognition](http://www2.tau.ac.il/yedion/syllabus.asp?year=2012&course=0627377701).
 
+## Assumptions
+
+1. All full meanings (sentences) are comprised of three parts: Agent, Patient
+   and Predicate. They are all mandatory.
+2. Meaning units (whether ufll or partial) cannot have more than one word
+   assigned to them.
+
 ## References
 
 [1] Kirby, S. (2000) *Syntax without Natural Selection: How compositionality
