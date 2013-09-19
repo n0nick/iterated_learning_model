@@ -1,4 +1,5 @@
 require_relative 'logger'
+require_relative 'player'
 
 class Game
   attr_accessor :population
@@ -51,7 +52,7 @@ class Game
   end
 
   def spawn_item
-    population << Item.new(@options[:probability])
+    population << Player.new(@options[:probability])
   end
 
   def kill_random_item

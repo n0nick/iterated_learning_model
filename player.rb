@@ -1,7 +1,7 @@
 require_relative 'logger'
 require_relative 'utterance'
 
-class Item
+class Player
   attr_accessor :id
   attr_accessor :age
   attr_accessor :grammar
@@ -9,7 +9,7 @@ class Item
   Alphabet = [ 'a', 'b', 'c', 'd' ]
 
   def initialize(probability)
-    self.id = Item.generate_id
+    self.id = Player.generate_id
     self.age = 0
     self.grammar = Grammar.new
 
@@ -17,15 +17,15 @@ class Item
   end
 
   def speak(meaning)
-    MyLogger.debug "Item ##{id} speaking #{meaning}"
+    MyLogger.debug "Player ##{id} speaking #{meaning}"
   end
 
   def learn utterance
-    MyLogger.debug "Item ##{id} learning #{utterance}"
+    MyLogger.debug "Player ##{id} learning #{utterance}"
   end
 
   def to_s
-    "<Item ##{id} age:#{age} grammar.size:#{grammar.size}>"
+    "<Player ##{id} age:#{age} grammar.size:#{grammar.size}>"
   end
 
   def self.generate_id
