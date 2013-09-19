@@ -60,10 +60,10 @@ class Grammar
     rule.meaning.each do |part, meaning|
       if rule.meaning.has?(part)
         rules.each do |key, rule2|
-          if rule != rule2
+          if rule.meaning != rule2.meaning
             if rule2.meaning[part] == meaning
-              rule = merge_step(rule, rule2, part)
-              new_rules << rule unless rule.nil?
+              new_rule = merge_step(rule, rule2, part)
+              new_rules << new_rule unless new_rule.nil?
             end
           end
         end
