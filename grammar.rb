@@ -59,8 +59,10 @@ class Grammar
 
     rule.meaning.each do |part, meaning|
       rules.each do |key, rule2|
-        if rule2.meaning[part] == meaning
-          new_rules << merge_step(rule, rule2, part)
+        if rule != rule2
+          if rule2.meaning[part] == meaning
+            new_rules << merge_step(rule, rule2, part)
+          end
         end
       end
     end
