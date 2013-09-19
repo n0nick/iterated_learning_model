@@ -28,7 +28,9 @@ class Player
   end
 
   def to_s
-    "<Player ##{id} age:#{age} grammar.size:#{grammar.size}>"
+    "<Player ##{id} age:#{age} " +
+    "grammar.size:#{grammar.size} " +
+    "grammar.meanings:#{grammar.meanings_count}>"
   end
 
   def self.generate_id
