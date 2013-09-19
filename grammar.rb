@@ -17,7 +17,7 @@ class Grammar < Hash
 
   def reverse_lookup(target)
     self.select do |word, meaning|
-      meaning.matches?(target)
+      target.matches?(meaning)
     end
   end
 end
