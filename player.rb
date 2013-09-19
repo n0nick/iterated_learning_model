@@ -33,7 +33,7 @@ class Player
 
   def to_s
     "<Player ##{id} age:#{age} " +
-    "grammar.size:#{grammar.size} " +
+    "grammar.size:#{grammar.count} " +
     "grammar.meanings:#{grammar.meanings_count}>"
   end
 

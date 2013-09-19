@@ -1,6 +1,6 @@
 require_relative 'utils'
 
-class Grammar < Hash
+class Grammar
   class Rule
     attr_accessor :meaning, :word
 
@@ -39,20 +39,26 @@ class Grammar < Hash
     end
   end
 
+  attr_accessor :rules
+
+  def initialize()
+    self.rules = {}
+  end
+
   def learn(meaning, word=nil)
     if meaning.is_a? Rule
       rule = meaning
     else
       rule = Rule.new(meaning, word)
     end
-    self[rule.meaning.to_sym] = rule
+    rules[rule.meaning.to_sym] = rule
   end
 
   def merge(rule)
     new_rules = []
 
     rule.meaning.each do |part, meaning|
-      self.each do |key, rule2|
+      rules.each do |key, rule2|
         if rule2.meaning[part] == meaning
           new_rules << merge_step(rule, rule2, part)
         end
@@ -78,15 +84,23 @@ class Grammar < Hash
   end
 
   def meanings_count
-    self.select do |key, rule|
+    rules.select do |key, rule|
       rule.full?
     end.count
   end
 
   def lookup(target)
-    self.select do |key, rule|
+    rules.select do |key, rule|
       target.matches?(rule.meaning)
     end.values
+  end
+
+  def count
+    rules.count
+  end
+
+  def to_s
+    rules.to_s
   end
 end
 
