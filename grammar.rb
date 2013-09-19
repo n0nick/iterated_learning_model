@@ -39,8 +39,14 @@ class Grammar < Hash
     end
   end
 
-  def learn(meaning, word)
-    self[meaning.to_sym] = Rule.new(meaning, word)
+  def learn(meaning, word=nil)
+    if meaning.is_a? Rule
+      rule = meaning
+    else
+      rule = Rule.new(meaning, word)
+    end
+    self[rule.meaning.to_sym] = rule
+  end
   end
 
   def meanings_count
