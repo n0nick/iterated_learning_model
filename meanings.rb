@@ -32,13 +32,18 @@ class Meaning
   end
 
   def full?
-    values.values.inject(true) do |mem, val|
-      mem && !val.nil?
-    end
+    missing_parts.count == 0
   end
 
   def partial?
-    not full?
+    missing_parts.count > 0
+  end
+
+  def missing_parts
+    values.keys.inject([]) do |res, part|
+      res << part if values[part].nil?
+      res
+    end
   end
 
   def to_s
