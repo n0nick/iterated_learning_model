@@ -58,10 +58,13 @@ class Grammar
     new_rules = []
 
     rule.meaning.each do |part, meaning|
-      rules.each do |key, rule2|
-        if rule != rule2
-          if rule2.meaning[part] == meaning
-            new_rules << merge_step(rule, rule2, part)
+      if rule.meaning.has?(part)
+        rules.each do |key, rule2|
+          if rule != rule2
+            if rule2.meaning[part] == meaning
+              rule = merge_step(rule, rule2, part)
+              new_rules << rule unless rule.nil?
+            end
           end
         end
       end
@@ -75,6 +78,8 @@ class Grammar
   def merge_step(rule1, rule2, part)
     # create new rule from longest common substring
     new_word = Utils.longest_common_substring(rule1.word, rule2.word)
+    return nil if new_word.empty?
+
     new_meaning = Meaning.new
     new_meaning[part] = rule1.meaning[part]
 
