@@ -7,6 +7,14 @@ class Grammar < Hash
       self.word = word
     end
 
+    def full?
+      meaning.full?
+    end
+
+    def partial?
+      meaning.partial?
+    end
+
     def to_s
       "'#{word}'"
     end
