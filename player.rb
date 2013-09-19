@@ -1,4 +1,5 @@
 require_relative 'logger'
+require_relative 'grammar'
 require_relative 'utterance'
 
 class Player
