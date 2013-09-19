@@ -20,8 +20,8 @@ class Game
   end
 
   def grammars
-    population.map do |item|
-      item.grammar
+    population.map do |player|
+      player.grammar
     end
   end
 
@@ -30,21 +30,21 @@ class Game
   def init_population(size)
     self.population = []
     size.times do
-      spawn_item
+      spawn_player
     end
   end
 
   def play_turn
-    spawn_item
-    kill_random_item
-    population.each do |item|
-      utterance = item.speak Meanings.sample
+    spawn_player
+    kill_random_player
+    population.each do |player|
+      utterance = player.speak Meanings.sample
       if utterance # something was said
         population.each do |other|
           other.learn utterance
         end
       end
-      item.age+= 1
+      player.age+= 1
     end
 
     avg_grammar  = average_grammar_attribute(:count)
@@ -52,11 +52,11 @@ class Game
     MyLogger.info "grammar: #{avg_grammar} meanings: #{avg_meanings}"
   end
 
-  def spawn_item
+  def spawn_player
     population << Player.new(@options[:probability])
   end
 
-  def kill_random_item
+  def kill_random_player
     index = rand(population.size)
     population.delete_at index
   end
