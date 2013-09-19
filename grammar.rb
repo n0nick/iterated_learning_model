@@ -46,12 +46,17 @@ class Grammar
   end
 
   def learn(meaning, word=nil)
+    rule = nil
+
     if meaning.is_a? Rule
       rule = meaning
-    else
+    elsif word
       rule = Rule.new(meaning, word)
     end
-    rules[rule.meaning.to_sym] = rule
+
+    unless rule.nil?
+      rules[rule.meaning.to_sym] = rule
+    end
   end
 
   def merge(rule)
