@@ -40,7 +40,7 @@ class Game
       utterance = item.speak Meanings.sample
       if utterance # something was said
         population.each do |other|
-          other.induce utterance
+          other.learn utterance
         end
       end
       item.age+= 1

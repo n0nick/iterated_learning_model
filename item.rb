@@ -20,7 +20,7 @@ class Item
     MyLogger.debug "Item ##{id} speaking #{meaning}"
   end
 
-  def induce utterance
+  def learn utterance
     MyLogger.debug "Item ##{id} learning #{utterance}"
   end
 
