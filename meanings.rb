@@ -7,26 +7,34 @@ class MeaningBase
     self.value = value
   end
 
+  def to_s
+    "#{type}=#{value}"
+  end
+
   def to_sym
     self.to_s.to_sym
+  end
+
+  def ==(other)
+    self.to_s == other.to_s
   end
 end
 
 class MeaningAgent < MeaningBase
-  def to_s
-    "Agent=#{value}"
+  def type
+    :Agent
   end
 end
 
 class MeaningPredicate < MeaningBase
-  def to_s
-    "Predicate=#{value}"
+  def type
+    :Predicate
   end
 end
 
 class MeaningPatient < MeaningBase
-  def to_s
-    "Patient=#{value}"
+  def type
+    :Patient
   end
 end
 
@@ -35,20 +43,28 @@ class Meaning < MeaningBase
 
   def initialize(agent, predicate, patient)
     self.value = {
-      agent:     MeaningAgent.new(agent),
-      patient:   MeaningPatient.new(patient),
-      predicate: MeaningPredicate.new(predicate),
+      Agent:     MeaningAgent.new(agent),
+      Patient:   MeaningPatient.new(patient),
+      Predicate: MeaningPredicate.new(predicate),
     }
   end
 
   def agent
-    value[:agent]
+    value[:Agent]
   end
   def patient
-    value[:patient]
+    value[:Patient]
   end
   def predicate
-    value[:predicate]
+    value[:Predicate]
+  end
+
+  def [](part)
+    value[part]
+  end
+
+  def type
+    :Meaning
   end
 
   def each(&block)
