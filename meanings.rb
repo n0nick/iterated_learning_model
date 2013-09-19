@@ -18,7 +18,12 @@ class Meaning
   end
 
   def [](part)
-    values[part.to_s.downcase.to_sym]
+    values[part.to_sym]
+  end
+
+  def []=(part, value)
+    #TODO DRY
+    send("#{part}=", value) if [:agent, :predicate, :patient].include? part
   end
 
   def each(&block)
