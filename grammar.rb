@@ -15,6 +15,10 @@ class Grammar < Hash
       meaning.partial?
     end
 
+    def embed!(index, str)
+      self.word = word.gsub(index, str)
+    end
+
     def to_s
       "'#{word}'"
     end
