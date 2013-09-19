@@ -1,5 +1,13 @@
 class Grammar < Hash
+  attr_reader :meanings_count
+
+  def initialize
+    @meanings_count = 0
+  end
+
   def learn(word, meaning)
+    @meanings_count+= 1 if meaning.full?
+
     self[word.to_sym] = meaning
   end
 
