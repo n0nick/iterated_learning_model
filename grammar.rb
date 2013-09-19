@@ -20,16 +20,14 @@ class Grammar < Hash
     end
   end
 
-  attr_reader :meanings_count
-
-  def initialize
-    @meanings_count = 0
+  def learn(meaning, word)
+    self[meaning.to_sym] = Item.new(meaning, word)
   end
 
-  def learn(meaning, word)
-    @meanings_count+= 1 if meaning.full?
-
-    self[meaning.to_sym] = Item.new(meaning, word)
+  def meanings_count
+    self.select do |key, item|
+      item.full?
+    end.count
   end
 
   def lookup(target)
