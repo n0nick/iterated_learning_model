@@ -16,8 +16,8 @@ class Item
     @probability = probability
   end
 
-  def speak
-    MyLogger.debug "Item ##{id} speaking"
+  def speak(meaning)
+    MyLogger.debug "Item ##{id} speaking #{meaning}"
   end
 
   def induce utterance
