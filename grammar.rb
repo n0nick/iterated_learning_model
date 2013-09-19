@@ -5,6 +5,8 @@ class Grammar < Hash
     def initialize(meaning, word)
       self.meaning = meaning
       self.word = word
+
+      @_last_index = 0
     end
 
     def full?
@@ -19,8 +21,19 @@ class Grammar < Hash
       self.word = word.gsub(index, str)
     end
 
+    def generalise_part(part, word)
+      index = generate_index
+      meaning[part] = index
+      self.word.sub! word, index.to_s
+    end
+
     def to_s
       "'#{word}'"
+    end
+
+    private
+    def generate_index
+      @_last_index+= 1
     end
   end
 
