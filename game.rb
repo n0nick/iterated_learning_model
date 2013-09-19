@@ -38,7 +38,7 @@ class Game
     kill_random_item
     population.each do |item|
       utterance = item.speak Meanings.sample
-      unless utterance.nil?
+      if utterance # something was said
         population.each do |other|
           other.induce utterance
         end
