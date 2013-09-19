@@ -46,7 +46,8 @@ class Game
       item.age+= 1
     end
 
-    MyLogger.info "Avg. grammar size: #{average_grammar_size}"
+    MyLogger.info "grammar: #{average_grammar_attribute(:count)}"
+    MyLogger.info "meanings: #{average_grammar_attribute(:meanings_count)}"
   end
 
   def spawn_item
@@ -58,8 +59,8 @@ class Game
     population.delete_at index
   end
 
-  def average_grammar_size
-    sizes = grammars.map { |g| g.size }
+  def average_grammar_attribute(att)
+    sizes = grammars.map { |g| g.send(att) }
     sizes.inject(:+).to_f / population.size
   end
 end
