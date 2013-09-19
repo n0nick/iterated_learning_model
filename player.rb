@@ -18,10 +18,13 @@ class Player
 
   def speak(meaning)
     MyLogger.debug "Player ##{id} speaking #{meaning}"
+    word = lookup(meaning, should_invent?)
+    Utterance.new meaning, word
   end
 
   def learn utterance
     MyLogger.debug "Player ##{id} learning #{utterance}"
+    grammar.learn utterance.meaning, utterance.word
   end
 
   def to_s
