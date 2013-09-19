@@ -1,96 +1,52 @@
 # encoding: UTF-8
 
-class MeaningBase
-  attr_accessor :value
-
-  def initialize(value)
-    self.value = value
-  end
-
-  def to_s
-    "#{type}=#{value}"
-  end
-
-  def to_sym
-    self.to_s.to_sym
-  end
-
-  def ==(other)
-    self.to_s == other.to_s
-  end
-end
-
-class MeaningAgent < MeaningBase
-  def type
-    :Agent
-  end
-end
-
-class MeaningPredicate < MeaningBase
-  def type
-    :Predicate
-  end
-end
-
-class MeaningPatient < MeaningBase
-  def type
-    :Patient
-  end
-end
-
-class Meaning < MeaningBase
-  include Enumerable
-
+class Meaning
   attr_accessor :agent, :predicate, :patient
 
   def initialize(agent = nil, predicate = nil, patient = nil)
-    agent     = MeaningAgent.new(agent)         if agent.is_a?(Symbol)
-    predicate = MeaningPredicate.new(predicate) if predicate.is_a?(Symbol)
-    patient   = MeaningPatient.new(patient)     if patient.is_a?(Symbol)
-
-    self.agent = agent
+    self.agent     = agent
     self.predicate = predicate
-    self.patient = patient
+    self.patient   = patient
   end
 
-  def type
-    :Meaning
-  end
-
-  def value
+  def values
     {
-      agent:     agent,
+      agent: agent,
       predicate: predicate,
-      patient:   patient,
+      patient: patient,
     }
   end
 
   def [](part)
-    value[part.to_s.downcase.to_sym]
+    values[part.to_s.downcase.to_sym]
   end
 
   def each(&block)
-    value.each(&block)
+    values.each(&block)
   end
 
   def matches?(other)
-    value.keys.inject(true) do |mem, key|
+    values.keys.inject(true) do |mem, key|
       mem && matches_part?(other, key)
     end
   end
 
   def full?
-    value.values.inject(true) do |mem, val|
+    values.values.inject(true) do |mem, val|
       mem && !val.nil?
     end
   end
 
   def partial?
-    !full?
+    not full?
   end
 
   def to_s
-    "S/#{agent},#{patient},#{predicate}"
+    "S/Agent=#{agent},Patient=#{patient},Predicate=#{predicate}"
+  end
+
+  def to_sym
+    to_s.to_sym
   end
 
   private
