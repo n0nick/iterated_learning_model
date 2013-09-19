@@ -25,6 +25,10 @@ class Meaning
     values.each(&block)
   end
 
+  def has?(part)
+    not values[part].is_a?(Numeric)
+  end
+
   def matches?(other)
     values.keys.inject(true) do |mem, key|
       mem && matches_part?(other, key)
@@ -41,7 +45,7 @@ class Meaning
 
   def missing_parts
     values.keys.inject({}) do |res, part|
-      res[part] = values[part] if values[part].is_a?(Numeric)
+      res[part] = values[part] unless has?(part)
       res
     end
   end
