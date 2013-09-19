@@ -49,35 +49,38 @@ class Player
   end
 
   def lookup(meaning, should_invent)
-    return nil if meaning.empty?
-    rules = grammar.lookup(meaning)
-    if rules.empty?
-      if should_invent
-        utter_randomly
-      end
-    else
-      rules.sort_by! do |rule|
-        rule.meaning.missing_parts.count
-      end
-      rules.each do |rule|
-        if rule.full?
-          return rule.word
-        else
-          current = rule.clone
-          current.meaning.missing_parts.each do |index, part|
-            required = Meaning.new #TODO
-            required[part] = meaning[part]
-            res = lookup(required, should_invent)
-            unless res.nil?
-              current.embed!(index, res)
+    word = nil
+    unless meaning.empty?
+      rules = grammar.lookup(meaning)
+      if rules.empty?
+        if should_invent
+          word = utter_randomly
+        end
+      else
+        rules.sort_by! do |rule|
+          rule.meaning.missing_parts.count
+        end
+        rules.each do |rule|
+          if rule.full?
+            return rule.word
+          else
+            current = rule.clone
+            current.meaning.missing_parts.each do |index, part|
+              required = Meaning.new #TODO
+              required[part] = meaning[part]
+              res = lookup(required, should_invent)
+              unless res.nil?
+                current.embed!(index, res)
+              end
             end
-          end
-          if current.full?
-            return current.word
+            if current.full?
+              return current.word
+            end
           end
         end
       end
     end
+    word
   end
 
   def utter_randomly
