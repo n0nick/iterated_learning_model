@@ -41,38 +41,61 @@ end
 class Meaning < MeaningBase
   include Enumerable
 
-  def initialize(agent, predicate, patient)
-    self.value = {
-      Agent:     MeaningAgent.new(agent),
-      Patient:   MeaningPatient.new(patient),
-      Predicate: MeaningPredicate.new(predicate),
-    }
-  end
+  attr_accessor :agent, :predicate, :patient
 
-  def agent
-    value[:Agent]
-  end
-  def patient
-    value[:Patient]
-  end
-  def predicate
-    value[:Predicate]
-  end
+  def initialize(agent = nil, predicate = nil, patient = nil)
+    agent     = MeaningAgent.new(agent)         if agent.is_a?(Symbol)
+    predicate = MeaningPredicate.new(predicate) if predicate.is_a?(Symbol)
+    patient   = MeaningPatient.new(patient)     if patient.is_a?(Symbol)
 
-  def [](part)
-    value[part]
+    self.agent = agent
+    self.predicate = predicate
+    self.patient = patient
   end
 
   def type
     :Meaning
   end
 
+  def value
+    {
+      agent:     agent,
+      predicate: predicate,
+      patient:   patient,
+    }
+  end
+
+  def [](part)
+    value[part.to_s.downcase.to_sym]
+  end
+
   def each(&block)
     value.each(&block)
   end
 
+  def matches?(other)
+    value.keys.inject(true) do |mem, key|
+      mem && matches_part?(other, key)
+    end
+  end
+
+  def full?
+    value.values.inject(true) do |mem, val|
+      mem && !val.nil?
+    end
+  end
+
+  def partial?
+    !full?
+  end
+
   def to_s
     "S/#{agent},#{patient},#{predicate}"
+  end
+
+  private
+  def matches_part?(other, part)
+    other[part].nil? || other[part] == self[part]
   end
 end
 
