@@ -64,7 +64,7 @@ class Item
   def induce utterance
     #1. Incorporation
     MyLogger.debug "Item ##{id} learning #{utterance}"
-    grammar.learn utterance.word, utterance.meaning
+    grammar.learn_meaning utterance.word, utterance.meaning
     #2. Merging
     #utterance.meaning.each do |part, value|
     #  rule = grammar.lookup_partial(part)
