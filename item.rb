@@ -30,62 +30,15 @@ class Item
   end
 
   def speak
-    meaning = Meanings.sample
-    word = lookup(meaning)
-    if word.empty?
-      if should_invent?
-        word = utter_randomly
-      end
-    end
-    MyLogger.debug "Item ##{id} speaking '#{word}' (#{meaning})"
-    Utterance.new(meaning, word) unless word.nil?
-  end
-
-  def lookup(meaning)
-    known = []
-    unknown = []
-    meaning.each do |part, value|
-      word = grammar.lookup(value)
-      if word
-        known << word
-      else
-        unknown << value
-      end
-    end
-
-    rest = grammar.lookup(unknown.join('_'))
-    if rest
-      known << rest
-    end
-
-    known.join('')
+    MyLogger.debug "Item ##{id} speaking"
   end
 
   def induce utterance
-    #1. Incorporation
-    MyLogger.debug "Item ##{id} learning #{utterance}"
-    grammar.learn_meaning utterance.word, utterance.meaning
-    #2. Merging
-    utterance.meaning.each do |part, value|
-      words = grammar.lookup_by_part(part, value)
-      if words.size > 1 # we can probably merge
-        #TODO TODO TODO
-      end
-    end
-    MyLogger.debug "----"
-  end
-
-  def knows? meaning
-    !grammar.lookup(meaning).nil?
+    MyLogger.debug "Item ##{id} learning"
   end
 
   def should_invent?
     rand(100) < @probability * 100
-  end
-
-  def utter_randomly
-    length = 3 + rand(5) #TODO magic
-    (0...length).map{ Alphabet.sample }.join
   end
 
   def to_s
