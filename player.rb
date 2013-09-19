@@ -49,6 +49,7 @@ class Player
   end
 
   def lookup(meaning, should_invent)
+    return nil if meaning.empty?
     rules = grammar.lookup(meaning)
     if rules.empty?
       if should_invent
