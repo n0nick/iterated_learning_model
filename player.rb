@@ -28,7 +28,7 @@ class Player
     # 1. Incorporation
     rule = grammar.learn utterance.meaning, utterance.word
     # 2. Merging
-    grammar.merge rule
+    grammar.merge rule if rule
   end
 
   def to_s
