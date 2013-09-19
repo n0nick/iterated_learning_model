@@ -63,8 +63,8 @@ class Player
           return rule.word
         else
           current = rule.clone
-          current.missing_parts.each do |index, part|
-            res = self.lookup(meaning[part], should_invent)
+          current.meaning.missing_parts.each do |index, part|
+            res = lookup(meaning[part], should_invent)
             unless res.nil?
               current.embed!(index, res)
             end
