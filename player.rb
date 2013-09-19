@@ -65,7 +65,9 @@ class Player
         else
           current = rule.clone
           current.meaning.missing_parts.each do |index, part|
-            res = lookup(meaning[part], should_invent)
+            required = Meaning.new #TODO
+            required[part] = meaning[part]
+            res = lookup(required, should_invent)
             unless res.nil?
               current.embed!(index, res)
             end
