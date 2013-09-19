@@ -35,7 +35,7 @@ class Grammar < Hash
   def lookup(target)
     self.select do |key, item|
       target.matches?(item.meaning)
-    end
+    end.values
   end
 end
 
