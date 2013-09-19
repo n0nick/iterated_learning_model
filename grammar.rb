@@ -20,7 +20,7 @@ class Grammar
     end
 
     def embed!(index, str)
-      self.word = word.gsub(index, str)
+      self.word = word.sub(index, str)
     end
 
     def generalise_part(part, word)
