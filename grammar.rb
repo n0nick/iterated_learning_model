@@ -35,7 +35,7 @@ class Grammar
 
     private
     def generate_index
-      @_last_index+= 1
+      @_last_index+= 1 % 10
     end
   end
 
