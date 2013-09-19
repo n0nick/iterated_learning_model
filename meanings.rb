@@ -31,7 +31,7 @@ class Meaning
   end
 
   def has?(part)
-    not values[part].is_a?(Numeric)
+    values[part].is_a?(Symbol)
   end
 
   def matches?(other)
@@ -46,6 +46,12 @@ class Meaning
 
   def partial?
     missing_parts.count > 0
+  end
+
+  def empty?
+    values.keys.inject(false) do |res, part|
+      res || !has?(part)
+    end
   end
 
   def missing_parts
