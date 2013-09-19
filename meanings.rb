@@ -40,8 +40,8 @@ class Meaning
   end
 
   def missing_parts
-    values.keys.inject([]) do |res, part|
-      res << part if values[part].nil?
+    values.keys.inject({}) do |res, part|
+      res[part] = values[part] if values[part].is_a?(Numeric)
       res
     end
   end
