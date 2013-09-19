@@ -21,7 +21,7 @@ class Item
   end
 
   def induce utterance
-    MyLogger.debug "Item ##{id} learning"
+    MyLogger.debug "Item ##{id} learning #{utterance}"
   end
 
   def should_invent?
