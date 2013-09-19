@@ -24,10 +24,6 @@ class Item
     MyLogger.debug "Item ##{id} learning #{utterance}"
   end
 
-  def should_invent?
-    rand(100) < @probability * 100
-  end
-
   def to_s
     "<Item ##{id} age:#{age} grammar.size:#{grammar.size}>"
   end
@@ -36,6 +32,11 @@ class Item
     @last_id ||= 0
     @last_id+= 1
   end
-end
 
+  private
+
+  def should_invent?
+    rand(100) < @probability * 100
+  end
+end
 
