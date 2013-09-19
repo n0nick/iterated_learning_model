@@ -30,7 +30,7 @@ class Grammar
     end
 
     def to_s
-      "'#{word}'"
+      "#{meaning} -> '#{word}'"
     end
 
     private
@@ -102,7 +102,9 @@ class Grammar
   end
 
   def to_s
-    rules.to_s
+    '{' + rules.values.inject([]) do |mem, rule|
+      mem << rule.to_s
+    end.join('; ') + '}'
   end
 end
 
