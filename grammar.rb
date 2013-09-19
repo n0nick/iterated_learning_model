@@ -1,4 +1,5 @@
 require_relative 'utils'
+require_relative 'meanings'
 
 class Grammar
   class Rule
