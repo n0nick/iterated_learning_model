@@ -92,7 +92,9 @@ class Grammar
 
       unless new_word.empty?
         rules.each do |r|
+          delete_rule(r)
           r.generalise_part! part, new_word
+          add_rule(r)
         end
 
         new_meaning = Meaning.new
