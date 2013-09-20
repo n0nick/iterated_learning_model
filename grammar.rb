@@ -6,8 +6,8 @@ class Grammar
     attr_accessor :meaning, :word
 
     def initialize(meaning, word)
-      self.meaning = meaning
-      self.word = word
+      self.meaning = meaning.clone
+      self.word    = word.clone
 
       @_last_index = 0
     end
@@ -24,10 +24,9 @@ class Grammar
       self.word = word.sub(index, str)
     end
 
-    def generalise_part(part, word)
+    def generalise_part!(part, word)
       index = generate_index
-      self.meaning = meaning.clone
-      meaning[part] = index
+      self.meaning[part] = index
       self.word.sub! word, index.to_s
     end
 
@@ -83,6 +82,8 @@ class Grammar
   end
 
   def merge_step(rule1, rule2, part)
+    MyLogger.debug "Merge #{part} in #{rule1} with #{rule2}"
+
     # create new rule from longest common substring
     new_word = Utils.longest_common_substring(rule1.word, rule2.word)
     return nil if new_word.empty?
@@ -91,8 +92,11 @@ class Grammar
     new_meaning[part] = rule1.meaning[part]
 
     # update previous rules
-    rule1.generalise_part(part, new_word)
-    rule2.generalise_part(part, new_word)
+    rule1.generalise_part!(part, new_word)
+    rule2.generalise_part!(part, new_word)
+
+    MyLogger.debug "Merge finished with #{new_meaning} -> #{new_word}"
+    MyLogger.debug "Merge also changed #{rule1} and #{rule2}"
 
     Rule.new(new_meaning, new_word)
   end
