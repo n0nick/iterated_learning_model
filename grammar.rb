@@ -63,19 +63,19 @@ class Grammar
     end
   end
 
+  def with(part, meaning)
+    rules.values.select do |rule|
+      rule.meaning[part] == meaning
+    end
+  end
+
   def merge(rule)
     new_rules = []
 
     rule.meaning.each do |part, meaning|
       if rule.meaning.has?(part)
-        rules.each do |key, rule2|
-          if rule.meaning != rule2.meaning
-            if rule2.meaning[part] == meaning
-              new_rule = merge_step(rule, rule2, part)
-              new_rules << new_rule unless new_rule.nil?
-            end
-          end
-        end
+        new_rule = merge_part(rule, part)
+        new_rules << new_rule
       end
     end
 
@@ -84,24 +84,24 @@ class Grammar
     end
   end
 
-  def merge_step(rule1, rule2, part)
-    MyLogger.debug "Merge #{part} in #{rule1} with #{rule2}"
+  def merge_part(rule, part)
+    meaning = rule.meaning[part]
 
-    # create new rule from longest common substring
-    new_word = Utils.longest_common_substring(rule1.word, rule2.word)
-    return nil if new_word.empty?
+    rules = with(part, meaning)
+    if rules.count > 1
+      words = rules.map { |r| r.word }
+      new_word = Utils.longest_common_substr words, /[0-9]/
 
-    new_meaning = Meaning.new
-    new_meaning[part] = rule1.meaning[part]
+      unless new_word.empty?
+        rules.each do |r|
+          r.generalise_part! part, new_word
+        end
 
-    # update previous rules
-    rule1.generalise_part!(part, new_word)
-    rule2.generalise_part!(part, new_word)
-
-    MyLogger.debug "Merge finished with #{new_meaning} -> #{new_word}"
-    MyLogger.debug "Merge also changed #{rule1} and #{rule2}"
-
-    Rule.new(new_meaning, new_word)
+        new_meaning = Meaning.new
+        new_meaning[part] = meaning
+        Rule.new(new_meaning, new_word)
+      end
+    end
   end
 
   def clean
