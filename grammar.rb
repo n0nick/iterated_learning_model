@@ -58,9 +58,7 @@ class Grammar
       rule = Rule.new(meaning, word)
     end
 
-    unless rule.nil?
-      rules[rule.meaning.to_sym] = rule
-    end
+    add_rule(rule) unless rule.nil?
   end
 
   def with(part, meaning)
@@ -130,6 +128,16 @@ class Grammar
     '{' + rules.values.inject([]) do |mem, rule|
       mem << rule.to_s
     end.join('; ') + '}'
+  end
+
+  private
+
+  def add_rule rule
+    rules[rule.meaning.to_sym] = rule
+  end
+
+  def delete_rule rule
+    rules.delete rule.meaning.to_sym
   end
 end
 
