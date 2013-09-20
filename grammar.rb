@@ -73,7 +73,7 @@ class Grammar
     rule.meaning.each do |part, meaning|
       if rule.meaning.has?(part)
         new_rule = merge_part(rule, part)
-        new_rules << new_rule
+        new_rules << new_rule unless new_rule.nil?
       end
     end
 
