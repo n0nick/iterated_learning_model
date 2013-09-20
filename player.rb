@@ -30,6 +30,8 @@ class Player
     rule = grammar.learn utterance.meaning, utterance.word
     # 2. Merging
     grammar.merge rule if rule
+    # 3. Cleaning
+    grammar.clean
   end
 
   def to_s

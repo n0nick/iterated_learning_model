@@ -30,6 +30,9 @@ class Grammar
       self.word.sub! word, index.to_s
     end
 
+    def clean
+    end
+
     def to_s
       "#{meaning} -> '#{word}'"
     end
@@ -99,6 +102,12 @@ class Grammar
     MyLogger.debug "Merge also changed #{rule1} and #{rule2}"
 
     Rule.new(new_meaning, new_word)
+  end
+
+  def clean
+    rules.each do |key, rule|
+      rule.clean
+    end
   end
 
   def meanings_count
