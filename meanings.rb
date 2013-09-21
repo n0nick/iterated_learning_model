@@ -31,7 +31,11 @@ class Meaning
   end
 
   def has?(part)
-    values[part].is_a?(Symbol)
+    !values[part].nil?
+  end
+
+  def missing?(part)
+    values[part].is_a? Numeric
   end
 
   def matches?(other)
@@ -41,11 +45,13 @@ class Meaning
   end
 
   def full?
-    missing_parts.count == 0
+    values.keys.inject(true) do |mem, key|
+      mem && has?(key) && !missing?(key)
+    end
   end
 
   def partial?
-    missing_parts.count > 0
+    !empty? && missing_parts.count > 0
   end
 
   def empty?
@@ -56,7 +62,7 @@ class Meaning
 
   def missing_parts
     values.keys.inject({}) do |res, part|
-      res[values[part]] = part unless has?(part)
+      res[values[part]] = part if missing?(part)
       res
     end
   end
@@ -65,7 +71,7 @@ class Meaning
     values.keys.inject([]) do |res, part|
       value = values[part]
       unless value.nil?
-        res << "#{part}=#{value}" if include_missing || has?(part)
+        res << "#{part}=#{value}" if include_missing || !missing?(part)
       end
       res
     end.join(',')
@@ -77,7 +83,7 @@ class Meaning
 
   private
   def matches_part?(other, part)
-    !other.has?(part) || other[part] == self[part]
+    other.missing?(part) || other[part] == self[part]
   end
 end
 
