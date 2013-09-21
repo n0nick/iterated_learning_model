@@ -73,7 +73,9 @@ class Player
               required = Meaning.new #TODO
               required[part] = meaning[part]
               res = lookup(required, should_invent)
-              unless res.nil?
+              if res.nil?
+                return nil
+              else
                 current.embed!(index, res)
               end
             end
