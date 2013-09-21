@@ -121,6 +121,13 @@ class Grammar < Hash
   def clean!
     each do |key, rule|
       rule.clean!
+
+      # remove unrealistic recursive rules "1 -> 1a"
+      if rule.partial?
+        if rule.meaning.known_parts.count == 1
+          delete key
+        end
+      end
     end
   end
 
