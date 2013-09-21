@@ -1,7 +1,7 @@
 require_relative 'utils'
 require_relative 'meanings'
 
-class Grammar
+class Grammar < Hash
   class Rule
     attr_accessor :meaning, :word
 
@@ -43,12 +43,6 @@ class Grammar
     end
   end
 
-  attr_accessor :rules
-
-  def initialize()
-    self.rules = {}
-  end
-
   def learn(meaning, word=nil)
     rule = nil
 
@@ -62,7 +56,7 @@ class Grammar
   end
 
   def with(part, meaning)
-    rules.values.select do |rule|
+    values.select do |rule|
       rule.meaning[part] == meaning
     end
   end
@@ -105,41 +99,31 @@ class Grammar
   end
 
   def clean
-    rules.each do |key, rule|
+    each do |key, rule|
       rule.clean
     end
   end
 
   def meanings_count
-    rules.select do |key, rule|
+    select do |key, rule|
       rule.full?
     end.count
   end
 
   def lookup(target)
-    rules.select do |key, rule|
+    select do |key, rule|
       target.matches?(rule.meaning)
     end.values
-  end
-
-  def count
-    rules.count
-  end
-
-  def to_s
-    '{' + rules.values.inject([]) do |mem, rule|
-      mem << rule.to_s
-    end.join('; ') + '}'
   end
 
   private
 
   def add_rule rule
-    rules[rule.meaning.to_sym] = rule
+    self[rule.meaning.to_sym] = rule
   end
 
   def delete_rule rule
-    rules.delete rule.meaning.to_sym
+    delete rule.meaning.to_sym
   end
 end
 
