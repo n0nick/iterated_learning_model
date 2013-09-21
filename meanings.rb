@@ -45,9 +45,7 @@ class Meaning
   end
 
   def full?
-    values.keys.inject(true) do |mem, key|
-      mem && has?(key) && !missing?(key)
-    end
+    !empty? && missing_parts.count == 0
   end
 
   def partial?
