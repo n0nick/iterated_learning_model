@@ -37,6 +37,12 @@ class Grammar < Hash
       "#{meaning} -> '#{word}'"
     end
 
+    def clone
+      klone = super
+      klone.meaning = self.meaning.clone
+      klone
+    end
+
     private
     def generate_index
       @_last_index+= 1 % 10
