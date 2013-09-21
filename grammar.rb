@@ -20,7 +20,8 @@ class Grammar < Hash
       meaning.partial?
     end
 
-    def embed!(index, str)
+    def embed!(part, meaning, index, str)
+      self.meaning[part] = :embedded
       self.word = word.sub(index.to_s, str)
     end
 

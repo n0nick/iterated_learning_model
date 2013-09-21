@@ -78,7 +78,7 @@ class Player
                 word = nil
                 break
               else
-                current.embed!(index, res)
+                current.embed!(part, meaning, index, res)
               end
             end
             if current.full?
