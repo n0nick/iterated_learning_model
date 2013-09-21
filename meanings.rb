@@ -77,7 +77,7 @@ class Meaning
 
   private
   def matches_part?(other, part)
-    other[part].nil? || other[part] == self[part]
+    !other.has?(part) || other[part] == self[part]
   end
 end
 
