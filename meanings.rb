@@ -49,8 +49,8 @@ class Meaning
   end
 
   def empty?
-    values.keys.inject(false) do |res, part|
-      res || !has?(part)
+    values.keys.inject(true) do |res, part|
+      res && !has?(part)
     end
   end
 
