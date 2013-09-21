@@ -65,6 +65,13 @@ class Meaning
     end
   end
 
+  def known_parts
+    values.keys.inject([]) do |res, part|
+      res << part unless missing?(part)
+      res
+    end
+  end
+
   def to_s(include_missing = true)
     values.keys.inject([]) do |res, part|
       value = values[part]

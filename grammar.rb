@@ -25,13 +25,26 @@ class Grammar < Hash
       self.word = word.sub(index.to_s, str)
     end
 
-    def generalise_part!(part, word)
+    def generalise_part!(part, new_word)
       index = generate_index
-      self.meaning[part] = index
-      self.word.sub! word, index.to_s
+      meaning[part] = index
+      word.sub! new_word, index.to_s
+    end
+
+    def remove_part!(part)
+      word.sub! meaning[part].to_s, ''
+      meaning[part] = nil
+      word
     end
 
     def clean
+      if meaning.partial?
+        if meaning.known_parts.count == 1
+          meaning.missing_parts.each do |index, part|
+            remove_part!(part)
+          end
+        end
+      end
     end
 
     def to_s
