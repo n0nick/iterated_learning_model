@@ -33,9 +33,6 @@ g.merge r2
 g.merge r3
 g.merge r4
 
-binding.pry
-
 m5 = Meaning.new(:Jack, :hates, :Dan)
-p.speak m5
-
-binding.pry
+debugger
+p.speak m5 # 'afgd'
