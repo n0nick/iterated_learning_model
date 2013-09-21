@@ -35,4 +35,5 @@ g.merge r4
 
 m5 = Meaning.new(:Jack, :hates, :Dan)
 debugger
-p.speak m5 # 'afgd'
+w = p.speak m5 # 'afgd'
+puts w.inspect
