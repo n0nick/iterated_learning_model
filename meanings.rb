@@ -67,7 +67,7 @@ class Meaning
 
   def known_parts
     values.keys.inject([]) do |res, part|
-      res << part unless missing?(part)
+      res << part if has?(part) && missing?(part)
       res
     end
   end
