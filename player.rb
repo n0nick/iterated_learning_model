@@ -31,7 +31,7 @@ class Player
     # 2. Merging
     grammar.merge rule if rule
     # 3. Cleaning
-    grammar.clean
+    grammar.clean!
   end
 
   def to_s

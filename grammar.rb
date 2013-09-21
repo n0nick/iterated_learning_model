@@ -37,7 +37,7 @@ class Grammar < Hash
       word
     end
 
-    def clean
+    def clean!
       if meaning.partial?
         if meaning.known_parts.count == 1
           meaning.missing_parts.each do |index, part|
@@ -118,9 +118,9 @@ class Grammar < Hash
     end
   end
 
-  def clean
+  def clean!
     each do |key, rule|
-      rule.clean
+      rule.clean!
     end
   end
 

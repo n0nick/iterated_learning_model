@@ -33,7 +33,7 @@ g.merge r2
 g.merge r3
 g.merge r4
 
-g.clean #TODO integrate somewhere?
+g.clean! #TODO integrate somewhere?
 
 m5 = Meaning.new(:Jack, :hates, :Dan)
 w = p.speak m5 # 'afgd'
