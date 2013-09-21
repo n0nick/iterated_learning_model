@@ -63,7 +63,7 @@ class Player
       else
         rules.sort_by! do |rule|
           rule.meaning.missing_parts.count
-        end
+        end.reverse!
         rules.each do |rule|
           if rule.full?
             return rule.word
