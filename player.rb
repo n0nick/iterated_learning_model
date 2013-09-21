@@ -94,7 +94,8 @@ class Player
   end
 
   def utter_randomly
-    length = 3 + rand(5) #TODO magic
+    length = Utterance::MinLength +
+      rand(Utterance::MaxLength - Utterance::MinLength)
     (0...length).map{ Alphabet.sample }.join
   end
 end
