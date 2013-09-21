@@ -132,10 +132,16 @@ class Grammar < Hash
   end
 
   def meanings_count
-    #TODO this is wrong
-    select do |key, rule|
-      rule.full?
-    end.count
+    grouped = count_by_known_parts
+    count = Meaning::Categories.inject(1) do |m, cat|
+      m *= grouped[[cat]]
+    end
+    (2..Meaning::Categories.length).each do |i|
+      Meaning::Categories.permutation(i) do |c|
+        count += grouped[c] * (grouped[Meaning::Categories - c] || 0)
+      end
+    end
+    count
   end
 
   def lookup(target)
@@ -152,6 +158,19 @@ class Grammar < Hash
 
   def delete_rule rule
     delete rule.meaning.to_sym
+  end
+
+  def count_by_known_parts
+    init = {}
+    (1..Meaning::Categories.length).each do |i|
+      Meaning::Categories.permutation(i) { |c| init[c] = 0 }
+    end
+    values.inject(init) do |res, rule|
+      key = rule.meaning.known_parts
+      res[key] ||= 0
+      res[key] += 1
+      res
+    end
   end
 end
 
