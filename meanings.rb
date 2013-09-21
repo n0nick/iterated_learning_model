@@ -61,15 +61,18 @@ class Meaning
     end
   end
 
-  def to_s
+  def to_s(include_missing = true)
     values.keys.inject([]) do |res, part|
-      res << "#{part}=#{values[part]}" if has?(part)
+      value = values[part]
+      unless value.nil?
+        res << "#{part}=#{value}" if include_missing || has?(part)
+      end
       res
     end.join(',')
   end
 
   def to_sym
-    to_s.to_sym
+    to_s(false).to_sym
   end
 
   private
