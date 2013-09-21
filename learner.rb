@@ -33,6 +33,7 @@ OptionParser.new do |opts|
   opts.on("-d", "--debug",
            "Show debug messages") do |debug|
     if debug
+      require 'pry'
       MyLogger.level = Logger::DEBUG
     end
   end
