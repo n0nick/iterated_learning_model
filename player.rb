@@ -66,7 +66,8 @@ class Player
         end.reverse!
         rules.each do |rule|
           if rule.full?
-            return rule.word
+            word = rule.word
+            break
           else
             current = rule.clone
             current.meaning.missing_parts.each do |index, part|
@@ -74,13 +75,15 @@ class Player
               required[part] = meaning[part]
               res = lookup(required, should_invent)
               if res.nil?
-                return nil
+                word = nil
+                break
               else
                 current.embed!(index, res)
               end
             end
             if current.full?
-              return current.word
+              word = current.word
+              break
             end
           end
         end
