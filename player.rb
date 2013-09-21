@@ -71,7 +71,7 @@ class Player
           else
             current = rule.clone
             current.meaning.missing_parts.each do |index, part|
-              required = Meaning.new #TODO
+              required = Meaning.new
               required[part] = meaning[part]
               res = lookup(required, should_invent)
               if res.nil?
