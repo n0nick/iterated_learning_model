@@ -132,6 +132,7 @@ class Grammar < Hash
   end
 
   def meanings_count
+    #TODO buggy - we have some duplicate counts
     grouped = count_by_known_parts
     count = Meaning::Categories.inject(1) do |m, cat|
       m *= grouped[[cat]]
