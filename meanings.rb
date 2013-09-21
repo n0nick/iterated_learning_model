@@ -70,6 +70,13 @@ class Meaning
 
   def known_parts
     values.keys.inject([]) do |res, part|
+      res << part if has?(part) && !missing?(part)
+      res
+    end
+  end
+
+  def unknown_parts
+    values.keys.inject([]) do |res, part|
       res << part if has?(part) && missing?(part)
       res
     end

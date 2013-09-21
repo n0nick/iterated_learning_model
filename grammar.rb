@@ -124,7 +124,7 @@ class Grammar < Hash
 
       # remove unrealistic recursive rules "1 -> 1a"
       if rule.partial?
-        if rule.meaning.known_parts.count == 1
+        if rule.meaning.unknown_parts.count == 1
           delete key
         end
       end
