@@ -21,7 +21,7 @@ class Grammar < Hash
     end
 
     def embed!(index, str)
-      self.word = word.sub(index, str)
+      self.word = word.sub(index.to_s, str)
     end
 
     def generalise_part!(part, word)
