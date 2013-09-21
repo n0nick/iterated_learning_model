@@ -34,6 +34,7 @@ OptionParser.new do |opts|
            "Show debug messages") do |debug|
     if debug
       require 'pry'
+      options[:debug] = true
       MyLogger.level = Logger::DEBUG
     end
   end
@@ -49,4 +50,8 @@ game.play(options[:iterations])
 
 if options[:print_grammars]
   puts game.grammars
+end
+
+if options[:debug]
+  binding.pry
 end
