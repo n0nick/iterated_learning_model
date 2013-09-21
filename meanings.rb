@@ -83,7 +83,8 @@ class Meaning
 
   private
   def matches_part?(other, part)
-    other.missing?(part) || other[part] == self[part]
+    (has?(part) && other.missing?(part)) ||
+      other[part] == self[part]
   end
 end
 
