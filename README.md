@@ -16,10 +16,10 @@ Seminar: Computation and Cognition](http://www2.tau.ac.il/yedion/syllabus.asp?ye
 
 1. All full meanings (sentences) are comprised of three parts: Agent,
    Patient and Predicate. They are all mandatory.
-2. Meaning units (whether ufll or partial) cannot have more than one word
+2. Meaning units (whether full or partial) cannot have more than one word
    assigned to them.
-3. Generalizations are done on the maximal possible level; A learner would
-   always prefer the most generic rule (a take on Ocaam's Razor). This
+3. Generalizations are done on the maximal possible level; a learner would
+   always prefer the most generic rule (a take on Occam's Razor). This
    specifically means that word learning is done using a Longest Common
    Substring algorithm.
 4. Generalizations are done naively. Specifically, the said Longest Common
@@ -33,4 +33,4 @@ Seminar: Computation and Cognition](http://www2.tau.ac.il/yedion/syllabus.asp?ye
 emerges from vocabulary in a population of learners*. In C. Knight, editor, The
 Evolutionary Emergence of Language: Social Function and the Origins of
 Linguistic Form, pages 303-323. Cambridge University Press.
-[(pdf)](http://www.lel.ed.ac.uk/~simon/Papers/Kirby/Syntax%20without%20Natural%20Selection%20How%20compositionality.pdf)
+[(PDF)](http://www.lel.ed.ac.uk/~simon/Papers/Kirby/Syntax%20without%20Natural%20Selection%20How%20compositionality.pdf)
