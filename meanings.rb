@@ -1,7 +1,11 @@
 # encoding: UTF-8
 
 class Meaning
-  attr_accessor :agent, :predicate, :patient
+  Categories = [:agent, :predicate, :patient]
+
+  Categories.each do |cat|
+    attr_accessor cat
+  end
 
   def initialize(agent = nil, predicate = nil, patient = nil)
     self.agent     = agent
@@ -22,8 +26,7 @@ class Meaning
   end
 
   def []=(part, value)
-    #TODO DRY
-    send("#{part}=", value) if [:agent, :predicate, :patient].include? part
+    send("#{part}=", value) if Categories.include? part
   end
 
   def each(&block)
