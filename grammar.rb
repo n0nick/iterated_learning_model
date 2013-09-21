@@ -105,6 +105,7 @@ class Grammar < Hash
   end
 
   def meanings_count
+    #TODO this is wrong
     select do |key, rule|
       rule.full?
     end.count
