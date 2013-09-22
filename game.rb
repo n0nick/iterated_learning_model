@@ -10,9 +10,11 @@ class Game
     init_population(@options[:population])
   end
 
-  def play(iterations)
+  def play(iterations=nil, sub_iterations = nil)
+    iterations ||= @options[:iterations]
+
     iterations.times do |i|
-      play_turn
+      play_turn(sub_iterations)
 
       avg_grammar  = average_grammar_attribute(:count)
       avg_meanings = average_grammar_attribute(:meanings_count)
@@ -37,28 +39,37 @@ class Game
     end
   end
 
-  def play_turn
-    spawn_player
-    kill_random_player
-    population.each do |player|
-      utterance = player.speak Meanings.sample
+  def play_turn(sub_iterations = nil)
+    sub_iterations ||= @options[:sub_iterations]
+
+    # Replace a random player
+    index = random_player_index
+    population[index] = Player.new(@options[:probability])
+
+    sub_iterations.times do
+      speaker   = population[random_neighbor_index(index)]
+      utterance = speaker.speak(Meanings.sample)
       if utterance # something was said
-        population.each do |other|
-          other.learn utterance
-        end
+        population[index].learn(utterance)
       end
-      player.age+= 1
     end
 
+    population.each do |player|
+      player.age+= 1
+    end
+  end
+
+  def random_player_index
+    rand(population.size)
+  end
+
+  def random_neighbor_index(index)
+    direction = [+1, -1].sample
+    (index + direction) % population.size
   end
 
   def spawn_player
     population << Player.new(@options[:probability])
-  end
-
-  def kill_random_player
-    index = rand(population.size)
-    population.delete_at index
   end
 
   def average_grammar_attribute(att)

@@ -8,7 +8,8 @@ require_relative 'meanings'
 require 'optparse'
 options = {
   population: 10,
-  iterations: 500,
+  iterations: 5000,
+  sub_iterations: 100,
   probability: 2,
   print_grammars: false,
 }
@@ -23,6 +24,11 @@ OptionParser.new do |opts|
   opts.on("-i N", "--iterations N", Integer,
           "Set iterations count") do |v|
     options[:iterations] = v
+  end
+
+  opts.on("-si N", "--sub-iterations N", Integer,
+         "Set sub-iterations count") do |v|
+    options[:sub_iterations] = v
   end
 
   opts.on("--probability N", Float,
@@ -46,7 +52,7 @@ OptionParser.new do |opts|
 end.parse!
 
 game = Game.new(options)
-game.play(options[:iterations])
+game.play
 
 if options[:print_grammars]
   puts game.grammars
