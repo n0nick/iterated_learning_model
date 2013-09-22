@@ -12,8 +12,11 @@ class Game
 
   def play(iterations)
     iterations.times do |i|
-      MyLogger.debug "Playing turn ##{i}"
       play_turn
+
+      avg_grammar  = average_grammar_attribute(:count)
+      avg_meanings = average_grammar_attribute(:meanings_count)
+      MyLogger.info "#%4d grammar: %5.1f meanings: %5.1f" % [i, avg_grammar, avg_meanings]
     end
 
     MyLogger.debug "Population: #{population}"
@@ -47,9 +50,6 @@ class Game
       player.age+= 1
     end
 
-    avg_grammar  = average_grammar_attribute(:count)
-    avg_meanings = average_grammar_attribute(:meanings_count)
-    MyLogger.info "grammar: #{avg_grammar} meanings: #{avg_meanings}"
   end
 
   def spawn_player
