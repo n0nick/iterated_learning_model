@@ -9,7 +9,7 @@ require 'optparse'
 options = {
   population: 10,
   iterations: 500,
-  probability: 10,
+  probability: 2,
   print_grammars: false,
 }
 OptionParser.new do |opts|
