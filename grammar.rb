@@ -31,22 +31,6 @@ class Grammar < Hash
       word.sub! new_word, index.to_s
     end
 
-    # def remove_part!(part)
-    #   word.sub! meaning[part].to_s, ''
-    #   meaning[part] = nil
-    #   word
-    # end
-
-    def clean!
-      #TODO figure out if needed
-      # if meaning.partial?
-      #   if meaning.known_parts.count == 1
-      #     meaning.missing_parts.each do |index, part|
-      #       remove_part!(part)
-      #     end
-      #   end
-      # end
-    end
 
     def to_s
       "#{meaning} -> '#{word}'"
@@ -121,7 +105,6 @@ class Grammar < Hash
 
   def clean!
     each do |key, rule|
-      rule.clean!
 
       # remove unrealistic recursive rules "1 -> 1a"
       if rule.partial?
