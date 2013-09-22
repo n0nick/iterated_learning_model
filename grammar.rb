@@ -20,6 +20,10 @@ class Grammar < Hash
       meaning.partial?
     end
 
+    def single_part?
+      partial? && meaning.known_parts.count == 1
+    end
+
     def embed!(part, meaning, index, str)
       self.meaning[part] = :embedded
       self.word = word.sub(index.to_s, str)
@@ -31,6 +35,9 @@ class Grammar < Hash
       word.sub! new_word, index.to_s
     end
 
+    def literal
+      word.gsub(/[0-9]/, '')
+    end
 
     def to_s
       "#{meaning} -> '#{word}'"
@@ -98,7 +105,13 @@ class Grammar < Hash
   end
 
   def clean!
+    new_rules = []
+
     each do |key, rule|
+      # split single-part rules
+      if rule.single_part?
+        new_rules << split_single_rule(rule)
+      end
 
       # remove unrealistic recursive rules "1 -> 1a"
       if rule.partial?
@@ -106,6 +119,10 @@ class Grammar < Hash
           delete key
         end
       end
+    end
+
+    new_rules.each do |rule|
+      learn rule
     end
   end
 
@@ -137,6 +154,16 @@ class Grammar < Hash
 
   def delete_rule rule
     delete rule.meaning.to_sym
+  end
+
+  def split_single_rule rule
+    part = rule.meaning.known_parts.first
+    new_word = rule.literal
+    new_meaning = Meaning.new
+    new_meaning[part] = rule.meaning[part]
+    add_rule Rule.new(new_meaning, new_word)
+    rule.generalise_part! part, new_word
+    rule
   end
 
   def count_by_known_parts
