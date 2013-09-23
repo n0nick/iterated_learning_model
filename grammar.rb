@@ -126,20 +126,6 @@ class Grammar < Hash
     end
   end
 
-  def meanings_count
-    #TODO buggy - we have some duplicate counts
-    grouped = count_by_known_parts
-    count = Meaning::Categories.inject(1) do |m, cat|
-      m *= grouped[[cat]]
-    end
-    (2..Meaning::Categories.length).each do |i|
-      Meaning::Categories.permutation(i) do |c|
-        count += grouped[c] * (grouped[Meaning::Categories - c] || 0)
-      end
-    end
-    count
-  end
-
   def lookup(target)
     select do |key, rule|
       target.matches?(rule.meaning)
@@ -164,19 +150,6 @@ class Grammar < Hash
     add_rule Rule.new(new_meaning, new_word)
     rule.generalise_part! part, new_word
     rule
-  end
-
-  def count_by_known_parts
-    init = {}
-    (1..Meaning::Categories.length).each do |i|
-      Meaning::Categories.permutation(i) { |c| init[c] = 0 }
-    end
-    values.inject(init) do |res, rule|
-      key = rule.meaning.known_parts
-      res[key] ||= 0
-      res[key] += 1
-      res
-    end
   end
 end
 

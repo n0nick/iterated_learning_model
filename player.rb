@@ -34,10 +34,17 @@ class Player
     grammar.clean!
   end
 
+  def meaning_count
+    Meanings.inject(0) do |count, m|
+      count+= 1 if can_speak?(m)
+      count
+    end
+  end
+
   def to_s
     "<Player ##{id} age:#{age} " +
-    "grammar.size:#{grammar.count} " +
-    "grammar.meanings:#{grammar.meanings_count}>"
+    "grammar.size:#{grammar.count}>"
+    #"grammar.meanings:#{meaning_count}>"
   end
 
   def self.generate_id
@@ -49,6 +56,10 @@ class Player
 
   def should_invent?
     rand(100) < @probability * 100
+  end
+
+  def can_speak?(meaning)
+    !lookup(meaning, false).nil?
   end
 
   def lookup(meaning, should_invent)

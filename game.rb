@@ -16,9 +16,8 @@ class Game
     iterations.times do |i|
       play_turn(sub_iterations)
 
-      avg_grammar  = average_grammar_attribute(:count)
-      avg_meanings = average_grammar_attribute(:meanings_count)
-      MyLogger.info "#%4d grammar: %5.1f meanings: %5.1f" % [i, avg_grammar, avg_meanings]
+      MyLogger.info "#%4d grammar: %5.1f meanings: %5.1f" %
+        [i, average_grammar_size, average_meaning_count]
     end
 
     MyLogger.debug "Population: #{population}"
@@ -72,8 +71,13 @@ class Game
     population << Player.new(@options[:probability])
   end
 
-  def average_grammar_attribute(att)
-    sizes = grammars.map { |g| g.send(att) }
+  def average_grammar_size
+    sizes = grammars.map(&:size)
+    sizes.inject(:+).to_f / population.size
+  end
+
+  def average_meaning_count
+    sizes = population.map(&:meaning_count)
     sizes.inject(:+).to_f / population.size
   end
 end
