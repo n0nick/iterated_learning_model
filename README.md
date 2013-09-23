@@ -26,6 +26,9 @@ Seminar: Computation and Cognition](http://www2.tau.ac.il/yedion/syllabus.asp?ye
    Substring algorithm requires exact matches only (no word difference
    calculation) and requires that they are totally common (no probability
    used).
+5. Invention can be done partially: if a learner is missing only a part
+   of a meaning, there is a (low) probability that they might choose to
+   invent it (generate a rnadom word for it).
 
 ## References
 
