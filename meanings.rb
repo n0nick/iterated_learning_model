@@ -82,6 +82,10 @@ class Meaning
     end
   end
 
+  def single_part?
+    partial? && known_parts.count == 1
+  end
+
   def to_s(include_missing = true)
     values.keys.inject([]) do |res, part|
       value = values[part]

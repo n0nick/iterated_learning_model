@@ -74,7 +74,7 @@ class Player
           rule.meaning.missing_parts.count
         end.reverse!
         rules.each do |rule|
-          if rule.full?
+          if rule.meaning.full?
             word = rule.word
             break
           else
@@ -90,7 +90,7 @@ class Player
                 current.embed!(part, meaning, index, res)
               end
             end
-            if current.full?
+            if current.meaning.full?
               word = current.word
               break
             end

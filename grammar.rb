@@ -12,23 +12,6 @@ class Grammar < Hash
       @_last_index = 0
     end
 
-    def full?
-      meaning.full?
-    end
-
-    def partial?
-      meaning.partial?
-    end
-
-    def single_part?
-      partial? && meaning.known_parts.count == 1
-    end
-
-    def embed!(part, meaning, index, str)
-      self.meaning[part] = :embedded
-      self.word = word.sub(index.to_s, str)
-    end
-
     def generalise_part!(part, new_word)
       index = generate_index
       meaning[part] = index
@@ -90,12 +73,12 @@ class Grammar < Hash
 
     each do |key, rule|
       # split single-part rules
-      if rule.single_part?
+      if rule.meaning.single_part?
         new_rules << split_single_rule(rule)
       end
 
       # remove unrealistic recursive rules "1 -> 1a"
-      if rule.partial?
+      if rule.meaning.partial?
         if rule.meaning.unknown_parts.count <= 1
           delete_rule rule
         end
