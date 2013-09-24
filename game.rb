@@ -7,25 +7,17 @@ class Game
   def initialize(options)
     @options = options
 
+    @generation = 0
+
     init_population(@options[:population])
   end
 
-  def play(iterations=nil, sub_iterations = nil)
-    iterations ||= @options[:iterations]
+  def play(generations=nil, iterations = nil)
+    generations ||= @options[:generations]
 
-    iterations.times do |i|
-      play_turn(sub_iterations)
-
-      # log iteration info
-      info = []
-      info << "Iteration#%d" % i
-      if @options[:print_grammar_size]
-        info << "grammar: %5.1f" % average_grammar_size
-      end
-      if @options[:print_meaning_count]
-        info << "meanings: %5.1f" % average_meaning_count
-      end
-      MyLogger.info info.join("\t")
+    generations.times do
+      @generation+= 1
+      play_step(iterations)
     end
 
     MyLogger.debug "Population: #{population}"
@@ -46,19 +38,21 @@ class Game
     end
   end
 
-  def play_turn(sub_iterations = nil)
-    sub_iterations ||= @options[:sub_iterations]
+  def play_step(iterations = nil)
+    iterations ||= @options[:iterations]
 
     # Replace a random player
     index = random_player_index
     population[index] = Player.new(@options[:probability])
 
-    sub_iterations.times do
+    iterations.times do |i|
       speaker   = population[random_neighbor_index(index)]
       utterance = speaker.speak(Meanings.sample)
       if utterance # something was said
         population[index].learn(utterance)
       end
+
+      log_info(i)
     end
 
     population.each do |player|
@@ -87,6 +81,19 @@ class Game
   def average_meaning_count
     sizes = population.map(&:meaning_count)
     sizes.inject(:+).to_f / population.size
+  end
+
+  def log_info(iteration)
+    info = []
+    info << "g#%4d" % @generation
+    info << "i#%3d" % iteration
+    if @options[:print_grammar_size]
+      info << "grammar: %5.1f" % average_grammar_size
+    end
+    if @options[:print_meaning_count]
+      info << "meanings: %5.1f" % average_meaning_count
+    end
+    MyLogger.info info.join("\t")
   end
 end
 

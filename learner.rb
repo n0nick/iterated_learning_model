@@ -8,8 +8,8 @@ require './meanings'
 require 'optparse'
 options = {
   :population => 10,
-  :iterations => 5000,
-  :sub_iterations => 100,
+  :generations => 5000,
+  :iterations => 100,
   :probability => 0.02,
   :print_grammars => false,
   :print_grammar_size => true,
@@ -23,14 +23,14 @@ OptionParser.new do |opts|
     options[:population] = v
   end
 
-  opts.on("-i N", "--iterations N", Integer,
-          "Set iterations count") do |v|
-    options[:iterations] = v
+  opts.on("-g N", "--generations N", Integer,
+          "Set generations count") do |v|
+    options[:generations] = v
   end
 
-  opts.on("-si N", "--sub-iterations N", Integer,
-         "Set sub-iterations count") do |v|
-    options[:sub_iterations] = v
+  opts.on("-i N", "--iterations N", Integer,
+         "Set iterations count (for each generation)") do |v|
+    options[:iterations] = v
   end
 
   opts.on("--probability N", Float,
