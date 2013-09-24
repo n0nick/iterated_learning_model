@@ -44,7 +44,6 @@ class Player
   def to_s
     "<Player ##{id} age:#{age} " +
     "grammar.size:#{grammar.count}>"
-    #"grammar.meanings:#{meaning_count}>"
   end
 
   def self.generate_id
@@ -63,7 +62,6 @@ class Player
   end
 
   def lookup(meaning, should_invent)
-    MyLogger.debug "Lookup: #{meaning}"
     word = nil
     unless meaning.empty?
       rules = grammar.lookup(meaning)
@@ -100,7 +98,6 @@ class Player
         end
       end
     end
-    MyLogger.debug "Lookup result: #{word.inspect}"
     word
   end
 
