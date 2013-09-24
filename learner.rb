@@ -12,6 +12,7 @@ options = {
   :iterations => 100,
   :probability => 0.02,
   :print_grammars => false,
+  :print_after => :generation,
   :print_grammar_size => true,
   :print_meaning_count => false,
 }
@@ -46,13 +47,18 @@ OptionParser.new do |opts|
   end
 
   opts.on("--[no-]print-grammar-size",
-          "Print grammar sizes after each turn") do |v|
+          "Print grammar sizes on each info log") do |v|
     options[:print_grammar_size] = v
   end
 
   opts.on("--[no-]print-meaning-count",
-          "Print meaning counts after each turn") do |v|
+          "Print meaning counts on each info log") do |v|
     options[:print_meaning_count] = v
+  end
+
+  opts.on("--print-after [iteration|geneation]",
+         "Set info log timing") do |v|
+    options[:print_after] = :iteration if v == 'iteration'
   end
 
   opts.on("--print-grammars",

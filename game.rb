@@ -52,8 +52,10 @@ class Game
         population[index].learn(utterance)
       end
 
-      log_info(i)
+      log_info(i) if @options[:print_after] == :iteration
     end
+
+    log_info if @options[:print_after] == :generation
 
     population.each do |player|
       player.age+= 1
@@ -83,10 +85,10 @@ class Game
     sizes.inject(:+).to_f / population.size
   end
 
-  def log_info(iteration)
+  def log_info(iteration = nil)
     info = []
     info << "g#%4d" % @generation
-    info << "i#%3d" % iteration
+    (info << "i#%3d" % iteration) if iteration
     if @options[:print_grammar_size]
       info << "grammar: %5.1f" % average_grammar_size
     end
