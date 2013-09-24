@@ -76,15 +76,13 @@ class Grammar < Hash
   def merge(rule)
     rule.meaning.each do |part, meaning|
       if rule.meaning.has?(part)
-        new_rule = merge_part(rule, part)
+        new_rule = merge_part(rule.meaning[part], part)
         learn new_rule unless new_rule.nil?
       end
     end
   end
 
-  def merge_part(rule, part)
-    meaning = rule.meaning[part]
-
+  def merge_part(meaning, part)
     rules = with(part, meaning)
     if rules.count > 1
       words = rules.map { |r| r.word }
