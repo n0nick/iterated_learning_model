@@ -12,29 +12,38 @@ class Grammar < Hash
       @_last_index = 0
     end
 
+    # generalise part with a new index
     def generalise_part!(part, new_word)
       index = generate_index
       meaning[part] = index
       word.sub! new_word, index.to_s
     end
 
+    # embed new_word in part, replacing index
+    def embed!(part, index, new_word)
+      self.meaning[part] = :embedded
+      self.word = word.sub(index.to_s, new_word)
+    end
+
+    # literal (non-digits) part of word
     def literal
       word.gsub(/[0-9]/, '')
+    end
+
+    # deep clone
+    def clone
+      super.tap do |rule|
+        rule.meaning = self.meaning.clone
+      end
     end
 
     def to_s
       "#{meaning} -> '#{word}'"
     end
 
-    def clone
-      klone = super
-      klone.meaning = self.meaning.clone
-      klone
-    end
-
     private
     def generate_index
-      @_last_index+= 1 % 10
+      @_last_index+= 1
     end
   end
 

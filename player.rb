@@ -12,18 +12,20 @@ class Player
 
   def initialize(probability)
     self.id = Player.generate_id
-    self.age = 0
     self.grammar = Grammar.new
+    self.age = 0
 
     @probability = probability
   end
 
-  def speak(meaning)
+  # (try to) articulate a given meaning
+  def speak meaning
     MyLogger.debug "Player ##{id} speaking #{meaning}"
     word = lookup(meaning, should_invent?)
     Utterance.new(meaning, word) unless word.nil?
   end
 
+  # learn from a neighbour's utterance
   def learn utterance
     MyLogger.debug "Player ##{id} learning #{utterance}"
     # 1. Incorporation
@@ -34,6 +36,7 @@ class Player
     grammar.clean!
   end
 
+  # count possible meanings available
   def meaning_count
     Meanings.inject(0) do |count, m|
       count+= 1 if can_speak?(m)
@@ -53,15 +56,25 @@ class Player
 
   private
 
+  # whether to invent a new word
   def should_invent?
     rand(100) < @probability * 100
   end
 
+  # utter a random word
+  def utter_randomly
+    length = Utterance::MinLength +
+      rand(Utterance::MaxLength - Utterance::MinLength)
+    (0...length).map{ Alphabet.sample }.join
+  end
+
+  # is meaning possible thru grammar
   def can_speak?(meaning)
     !lookup(meaning, false).nil?
   end
 
-  def lookup(meaning, should_invent)
+  # return word representing meaning, if available
+  def lookup(meaning, should_invent=false)
     word = nil
     unless meaning.empty?
       rules = grammar.lookup(meaning)
@@ -87,7 +100,7 @@ class Player
                 word = nil
                 break
               else
-                current.embed!(part, meaning, index, res)
+                current.embed!(part, index, res)
               end
             end
             if current.meaning.full?
@@ -99,12 +112,6 @@ class Player
       end
     end
     word
-  end
-
-  def utter_randomly
-    length = Utterance::MinLength +
-      rand(Utterance::MaxLength - Utterance::MinLength)
-    (0...length).map{ Alphabet.sample }.join
   end
 end
 
