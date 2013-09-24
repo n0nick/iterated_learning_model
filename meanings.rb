@@ -15,9 +15,9 @@ class Meaning
 
   def values
     {
-      agent: agent,
-      predicate: predicate,
-      patient: patient,
+      :agent => agent,
+      :predicate => predicate,
+      :patient => patient,
     }
   end
 

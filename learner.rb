@@ -7,11 +7,11 @@ require_relative 'meanings'
 
 require 'optparse'
 options = {
-  population: 10,
-  iterations: 5000,
-  sub_iterations: 100,
-  probability: 2,
-  print_grammars: false,
+  :population => 10,
+  :iterations => 5000,
+  :sub_iterations => 100,
+  :probability => 2,
+  :print_grammars => false,
 }
 OptionParser.new do |opts|
   opts.banner = "Usage: learner.rb [options]"
