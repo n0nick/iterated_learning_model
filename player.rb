@@ -21,7 +21,7 @@ class Player
   def speak(meaning)
     MyLogger.debug "Player ##{id} speaking #{meaning}"
     word = lookup(meaning, should_invent?)
-    Utterance.new meaning, word
+    Utterance.new(meaning, word) unless word.nil?
   end
 
   def learn utterance
