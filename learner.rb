@@ -12,6 +12,8 @@ options = {
   :sub_iterations => 100,
   :probability => 2,
   :print_grammars => false,
+  :print_grammar_size => true,
+  :print_meaning_count => false,
 }
 OptionParser.new do |opts|
   opts.banner = "Usage: learner.rb [options]"
@@ -38,11 +40,19 @@ OptionParser.new do |opts|
 
   opts.on("-d", "--debug",
            "Show debug messages") do |debug|
-    if debug
-      require 'pry'
-      options[:debug] = true
-      MyLogger.level = Logger::DEBUG
-    end
+    require 'pry'
+    options[:debug] = true
+    MyLogger.level = Logger::DEBUG
+  end
+
+  opts.on("--[no-]print-grammar-size",
+          "Print grammar sizes after each turn") do |v|
+    options[:print_grammar_size] = v
+  end
+
+  opts.on("--[no-]print-meaning-count",
+          "Print meaning counts after each turn") do |v|
+    options[:print_meaning_count] = v
   end
 
   opts.on("--print-grammars",

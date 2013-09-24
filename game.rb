@@ -16,8 +16,16 @@ class Game
     iterations.times do |i|
       play_turn(sub_iterations)
 
-      MyLogger.info "#%4d grammar: %5.1f meanings: %5.1f" %
-        [i, average_grammar_size, average_meaning_count]
+      # log iteration info
+      info = []
+      info << "Iteration#%d" % i
+      if @options[:print_grammar_size]
+        info << "grammar: %5.1f" % average_grammar_size
+      end
+      if @options[:print_meaning_count]
+        info << "meanings: %5.1f" % average_meaning_count
+      end
+      MyLogger.info info.join("\t")
     end
 
     MyLogger.debug "Population: #{population}"
