@@ -1,4 +1,4 @@
-require_relative 'meanings.rb'
+require './meanings.rb'
 
 class Utterance
   MinLength = Meaning::Categories.length

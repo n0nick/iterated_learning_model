@@ -1,5 +1,5 @@
-require_relative 'logger'
-require_relative 'player'
+require './logger'
+require './player'
 
 class Game
   attr_accessor :population

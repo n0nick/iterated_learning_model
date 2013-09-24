@@ -1,5 +1,5 @@
-require_relative 'utils'
-require_relative 'meanings'
+require './utils'
+require './meanings'
 
 class Grammar < Hash
   class Rule

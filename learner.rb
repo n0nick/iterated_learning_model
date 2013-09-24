@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require_relative 'logger'
-require_relative 'game'
-require_relative 'grammar'
-require_relative 'meanings'
+require './logger'
+require './game'
+require './grammar'
+require './meanings'
 
 require 'optparse'
 options = {

@@ -1,4 +1,4 @@
-require 'logger'
+require 'logger' # Ruby's Logger
 
 MyLogger = Logger.new(STDOUT)
 
