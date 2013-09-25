@@ -38,18 +38,31 @@ class Game
     end
   end
 
+  def noise?
+    rand(1000) < 0.001 * 1000 #TODO
+  end
+
   def play_step(iterations = nil)
     iterations ||= @options[:iterations]
 
     # Replace a random player
     index = random_player_index
     population[index] = Player.new(@options[:probability])
+    hearer = population[index]
 
     iterations.times do |i|
+      meaning = Meanings.sample
+
       speaker   = population[random_neighbor_index(index)]
-      utterance = speaker.speak(Meanings.sample)
+      if noise?
+        word = speaker.utter_randomly
+        utterance = Utterance.new(meaning, word)
+      else
+        utterance = speaker.speak(meaning)
+      end
+
       if utterance # something was said
-        population[index].learn(utterance)
+        hearer.learn(utterance)
       end
 
       log_info(i) if @options[:print_after] == :iteration

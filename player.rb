@@ -54,18 +54,18 @@ class Player
     @_last_id+= 1
   end
 
-  private
-
-  # whether to invent a new word
-  def should_invent?
-    rand(100) < @probability * 100
-  end
-
   # utter a random word
   def utter_randomly
     length = Utterance::MinLength +
       rand(Utterance::MaxLength - Utterance::MinLength)
     (0...length).map{ Alphabet.sample }.join
+  end
+
+  private
+
+  # whether to invent a new word
+  def should_invent?
+    rand(100) < @probability * 100
   end
 
   # is meaning possible thru grammar
