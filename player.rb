@@ -81,7 +81,7 @@ class Player
       if rules.empty?
         if should_invent
           word = utter_randomly
-          # self.learn Utterance.new meaning, word
+          self.learn Utterance.new meaning, word
         end
       else
         rules.sort_by! do |rule|
