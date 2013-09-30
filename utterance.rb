@@ -2,7 +2,7 @@ require './meanings.rb'
 
 class Utterance
   MinLength = Meaning::Categories.length
-  MaxLength = 8 #TODO magic
+  MaxLength = 8
 
   attr_accessor :meaning
   attr_accessor :word
